@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 });
 
 function initEventListeners(){
-    document.querySelectorAll('.nav-Link').forEach(link =>{
+    document.querySelectorAll('.nav-link').forEach(link =>{
         link.addEventListener('click', (e) =>{
             e.preventDefault();
             const targetId = link.getAttribute('href').substring(1);
@@ -74,17 +74,20 @@ function initEventListeners(){
 
         document.querySelectorAll('.error-msg').forEach(el => el.textContent = '');
 
-        const titleRes = validateTitle(title);
-        const dateRes = validateDate(dueDate);
-        const durationRes = validateDuration(durationRaw);
-        const tagRes = validateTag(tag);
-
+       const validations =[
+        { field: 'title', result: validateTitle(title) },
+        { field: 'dueDate', result: validateDate(dueDate) },
+        { field: 'duration', result: validateDuration(durationRaw) },
+        { field: 'tag' , result: validateTag(tag) }
+       ]
         let hasError = false;
-        if (!titleRes.valid) {document.getElementById('error-title').textContent = titleRes.message; hasError = true; }
-        if (!dateRes.valid) { document.getElementById('error-dueDate').textContent = dateRes.message; hasError = true; }
-    if (!durationRes.valid) { document.getElementById('error-duration').textContent = durationRes.message; hasError = true; }
-    if (!tagRes.valid) { document.getElementById('error-tag').textContent = tagRes.message; hasError = true; }
-
+       validations.forEach(item =>{
+        if (!item.result.valid) {
+                document.getElementById(`error-${item.field}`).textContent = item.result.message;
+                hasError = true;
+        }
+       });
+       
     if (hasDuplicateWords(title)) {
         document.getElementById('error-title').textContent = 'Warning: Title contains duplicate consecutive words.';
   }
