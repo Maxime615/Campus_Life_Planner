@@ -96,6 +96,9 @@ main{
 }
 
 h2 {
+    margin-bottom: 1.5rem;
+    display: block;
+}
     .stats-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -284,5 +287,4 @@ footer {
     main {
         padding: 0;
     }
-}
 }
