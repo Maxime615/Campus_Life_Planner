@@ -4,6 +4,9 @@ A lightweight browser-based planner for tracking academic and
 extracurricular responsibilities. Campus Life Planner lets you create
 and manage tasks or events, review workload statistics, search records
 with regular expressions, and back up your data as JSON.
+## Demo video
+
+Campus life planner demo video [https://youtu.be/satqnBhQqew]
 
 ## Overview
 
