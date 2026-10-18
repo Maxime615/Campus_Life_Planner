@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Life Planner - Tests</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            color: #333;
+            background-color: #f4f6f8;
+        }
+
+        h1 {
+            color: #1d3557;
+            margin-bottom: 1rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        li {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pass {
+            color: #2b9348;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: #e63946;
+            font-weight: bold;
+        }
+
+        .summary {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>Regex Validator unit Tests</h1>
+        <div id="summary-container" class="summary">Running tests...</div>
+        <ul id="test-results"></ul>
+    </div>
+
+    <script type="module">
+        import { validateTitle, validateDuration, validateDate, validateTag, hasDuplicateWords} from './scripts/validators.js';
+
+        const resultsContainer = document.getElementById('test-results');
+        const summaryContainer = document.getElementById('summary-container');
+        let passCount = 0;
+        let failCount = 0;
+
+        function assert(testName, condition) {
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            if(condition){
+                span.className = 'pass';
+                span.textContent = 'PASSED';
+                passCount++;
+            }else{
+                span.className = 'fail';
+                span.textContent = 'FAILED';
+                failCount++;
+            }
+            li.appendChild(document.createTextNode(testName));
+            li.appendChild(span);
+            resultsContainer.appendChild(li);
+            }
+
+            assert("Title: Valid title passes", validateTitle("Study Group").valid === true );
+            assert("Title: leading space fails", validateTitle(" Study Group").valid === false);
+            assert("Title: Trailing space fails", validateTitle("Study Group ").valid === false);
+
+            assert("Duration: Positive integer passes", validateDuration(120).valid === true);
+            assert("Duration: Decimal duration passes", validateDuration(45.5).valid === true);
+            assert("Duration: Negative number fails", validateDuration(-10).valid === false);
+
+            assert("Date: Valid YYYY-MM-DD passes", validateDate("2026-06-15").valid === true);
+            assert("Date: Invalid format fails", validateDate("15-06-2026").valid === false);
+
+            assert("Tag: Letters and spaces pass", validateTag("Computer Science").valid === true);
+            assert("Tag: Number fail tag validation", validateTag("Academics123").valid === false);
+
+            assert("Advanced Regex: Detects consecutive duplicate words", hasDuplicateWords("Study Study session") === true);
+            assert("Advanced Regex: Passes normal text without duplicate", hasDuplicateWords("Study Group session") === false);
+
+            summaryContainer.textContent = `Summary: ${passCount} passed, ${failCount}  failed out of ${passCount + failCount} tests.`;
+        </script>
+    </script>
+</body>
+
+</html>

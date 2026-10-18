@@ -1,0 +1,11 @@
+[
+    {
+        "id": "rec_001",
+        "title": "Study Group Session",
+        "dueDate": "2026-06-15",
+        "duration": 120,
+        "tag": "Academics",
+        "createdAt": "2026-06-10T14:30:00.000Z",
+        "updatedAt": "2026-06-10T14:30:00.000Z"
+    }
+]
